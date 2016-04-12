@@ -4,7 +4,7 @@ This IOS framework provides support for using the Researchnet backend.
 
 ### What is this repository for? ###
 
-* [Researchnet API](http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/)
+* Using this: [Researchnet API](http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/)
 
 ### How do I get set up? ###
 
