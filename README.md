@@ -1,29 +1,27 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This IOS framework provides support for using the Researchnet backend.
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* [Researchnet API](http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/)
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+To use this just drag the xcodeproj file to your IOS application (using the Finder), then add this as an embedded binary.  In your code add this import statement
+
+```
+import Researchnet
+```
+
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+* Please write tests
+* Use Pull Requests
+
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Please contact @adam704a with questions
+* Open issues in this repo for bugs or feature requests.
