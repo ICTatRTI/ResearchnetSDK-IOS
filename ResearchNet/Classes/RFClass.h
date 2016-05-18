@@ -10,6 +10,6 @@
 
 @interface RFClass : NSObject
 
--(void) printMessage:(NSString *) message;
+-(void) printConfiguration:(NSString *) host;
 
 @end

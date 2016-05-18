@@ -10,8 +10,8 @@
 
 @implementation RFClass
 
--(void) printMessage:(NSString *) message {
-    NSLog(@"The message is %@", message);
+-(void) printConfiguration:(NSString *) host {
+    NSLog(@"The host is %@", host);
 }
 
 @end
