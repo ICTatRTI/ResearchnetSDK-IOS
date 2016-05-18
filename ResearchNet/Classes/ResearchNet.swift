@@ -1,36 +1,33 @@
 import UIKit
-import Alamofire
-import SwiftyJSON
 
-public class ResearchNet: NSObject {
 
-    var host: String
-    var object: RFClass = RFClass()
-    
-    public init(host: String) {
-        self.host = host
-    }
+public class ResearchNet {
+
+    public var host: String = ""
+
+    public static let sharedInstance = ResearchNet()
+
     
     public func printConfiguration() {
-        
-        object.printConfiguration(self.host)
+         NSLog("The host is %@", host);
+        //object.printConfiguration(self.host)
     }
 
     public func authenticate(username: String, password: String){
-    	
-    	print("authenticate" )
+        
+        print("authenticate" )
 
     }
 
     public func forgotPassword(email: String){
 
-    	print("forgot password " )
+        print("forgot password " )
 
     }
 
     public func submitSurveyResponse(){
 
-    	print("submit survey response" )
+        print("submit survey response" )
     }
     
 }
