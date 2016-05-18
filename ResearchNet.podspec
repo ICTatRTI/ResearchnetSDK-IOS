@@ -19,5 +19,9 @@ ResearchNet is the easiest way to add secure, HIPAA compliant cloud data storage
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'ResearchNet/Classes/**/*'
+
+  s.dependency 'Alamofire', '~> 3.1.5'
+
+  s.dependency 'SwiftyJSON'
   
 end
