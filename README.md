@@ -4,15 +4,21 @@ This IOS framework provides support for using the Researchnet backend.
 
 ### What is this repository for? ###
 
-* Using this: [Researchnet API](http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/)
+Using this: [Researchnet API](http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/)
 
 ### How do I get set up? ###
 
-To use this just drag the xcodeproj file to your IOS application (using the Finder), then add this as an embedded binary.  In your code add this import statement
+####CocoaPods (iOS 9+, OS X 10.9+)
+You can use [Cocoapods](http://cocoapods.org/) to install `ResearchNet` by adding it to your `Podfile`:
+```ruby
+platform :ios, '8.0'
+use_frameworks!
 
+target 'MyApp' do
+	pod 'ResearchNet', :git => 'https://bitbucket.org/rcdrti/researchnetsdk-ios.git'
+end
 ```
-import Researchnet
-```
+Note that this requires CocoaPods version 36, and your iOS deployment target to be at least 9.0:
 
 
 ### Contribution guidelines ###
