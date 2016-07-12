@@ -20,7 +20,7 @@ public class ResearchNet: NSObject {
     }
     
     
-    public func enrollUser(completionHandler: (responseObject: String?, error: NSError?) -> (), username: String?, password: String?, first_name: String?, last_name: String?, gender: String?, dob: String?) {
+    public func enrollUser(completionHandler: (responseObject:NSHTTPURLResponse?, error: NSError?) -> (), username: String?, password: String?, first_name: String?, last_name: String?, gender: String?, dob: String?) {
         
         let parameters = [
             "username": username!,
@@ -47,12 +47,12 @@ public class ResearchNet: NSObject {
             case .Success(let data):
                 
                 let json = JSON(data)
-                completionHandler(responseObject: "" as String!, error: nil)
+                completionHandler(responseObject: response.response, error: nil)
                 
             case .Failure(let responseError):
-                
-                print("Request failed with error: \(responseError)")
-                completionHandler(responseObject: "hello" as String!, error: responseError)
+ 
+                //print("Request failed with error: \(responseError)")
+                completionHandler(responseObject: response.response , error: responseError)
                 
                 }
         }
@@ -83,20 +83,11 @@ public class ResearchNet: NSObject {
                 
                 let json = JSON(data)
                 let token = json["token"].stringValue
-                
-                if token == "" {
-                    print("unable to login: " , json["non_field_errors"][0] )
-                    completionHandler(responseObject: token as String!, error: nil)
-                    
-                } else { // Sucessussful Login
-                    print("logged in, there")
-                    completionHandler(responseObject: token as String!, error: nil)
-                }
+                completionHandler(responseObject: token as String!, error: nil)
                 
             case .Failure(let responseError):
-                
-                print("Request failed with error: \(responseError)")
-                completionHandler(responseObject: "hello" as String!, error: responseError)
+
+                completionHandler(responseObject: "error" as String!, error: responseError)
                 
             }
                 
