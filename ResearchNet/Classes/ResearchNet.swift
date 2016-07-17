@@ -6,7 +6,6 @@ public class ResearchNet: NSObject {
 
     var host: String
     var appKey: String
-    var userKey: String = ""
 
     
     public init(host: String, appKey: String) {
@@ -108,12 +107,15 @@ public class ResearchNet: NSObject {
     }
 
     
-    public func submitSurveyResponse(completionHandler: (responseObject: String?, error: NSError?) -> (), username: String?, password: String?, first_name: String?, last_name: String?, gender: String?, dob: String?) {
+    public func submitSurveyResponse(completionHandler: (responseObject: String?, error: NSError?) -> (), device_id: String?, lat: String?, long: String?, response: String?) {
         
         // call to submit api http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/#survey-submission
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let userKey = defaults.objectForKey("authKey")
+        
         let parameters = [
-            "response": username!,
+            "response": "hello",
 
         ]
         
