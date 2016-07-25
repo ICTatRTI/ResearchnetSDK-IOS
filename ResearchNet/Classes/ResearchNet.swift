@@ -60,8 +60,6 @@ public class ResearchNet: NSObject {
     }
     
     
-    
-    
     public func authenticateUser(completionHandler: (responseObject: String?, error: NSError?) -> (), username: String?, password: String?) {
 
         let parameters = [
@@ -107,20 +105,19 @@ public class ResearchNet: NSObject {
     }
 
     
-    public func submitSurveyResponse(completionHandler: (responseObject: String?, error: NSError?) -> (), device_id: String?, lat: String?, long: String?, response: String?) {
+    public func submitSurveyResponse(completionHandler: (responseObject: NSHTTPURLResponse?, error: NSError?) -> (), device_id: String?, lat: String?, long: String?, response: [String:String]) {
         
         // call to submit api http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/#survey-submission
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        let userKey = defaults.objectForKey("authKey")
+        let authKey = defaults.objectForKey("authKey")
         
         let parameters = [
-            "response": "hello",
-
+            "response": response,
         ]
         
         let headers = [
-            "Authorization": "Token \(userKey)"
+            "Authorization": "Token \(authKey)"
         ]
         
         Alamofire.request(.POST, "https://"+host+"/submission/", headers: headers, parameters: parameters)
@@ -128,18 +125,18 @@ public class ResearchNet: NSObject {
             .responseJSON { response in switch response.result {
                 
             case .Success(let data):
-                print("yay!")
-            
+                completionHandler(responseObject: response.response, error: nil)
+                
             case .Failure(let responseError):
                 
-                print("Request failed with error: \(responseError)")
-                completionHandler(responseObject: "hello" as String!, error: responseError)
+                //print("Request failed with error: \(responseError)")
+                completionHandler(responseObject: response.response , error: responseError)
                 
-                
+                }  
             }
         }
     
-    }
+    
 
 
 }
