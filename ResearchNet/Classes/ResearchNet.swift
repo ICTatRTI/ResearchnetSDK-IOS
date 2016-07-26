@@ -112,15 +112,21 @@ public class ResearchNet: NSObject {
         let defaults = NSUserDefaults.standardUserDefaults()
         let authKey = defaults.objectForKey("authKey")
         
-        let parameters = [
-            "response": response,
+        
+        var parameters: [String:AnyObject] = [
+            "device_id" : (device_id)!,
+            "lat" : lat!,
+            "long" : long!,
+            "response" : response
         ]
+        
         
         let headers = [
-            "Authorization": "Token \(authKey)"
+            "Authorization": "Token \(authKey!)"
         ]
         
-        Alamofire.request(.POST, "https://"+host+"/submission/", headers: headers, parameters: parameters)
+        
+        Alamofire.request(.POST, "https://"+host+"/submission/", headers: headers, parameters: parameters, encoding: .JSON)
             .validate()
             .responseJSON { response in switch response.result {
                 
@@ -128,9 +134,18 @@ public class ResearchNet: NSObject {
                 completionHandler(responseObject: response.response, error: nil)
                 
             case .Failure(let responseError):
+            
+                if let requestBody = response.data {
+                    do {
+                        let jsonArray = try NSJSONSerialization.JSONObjectWithData(requestBody, options: [])
+                        print("Array: \(jsonArray)")
+                    }
+                    catch {
+                        print("Error: \(error)")
+                    }
+                }
                 
-                //print("Request failed with error: \(responseError)")
-                completionHandler(responseObject: response.response , error: responseError)
+                completionHandler(responseObject: response.response,  error: responseError)
                 
                 }  
             }
