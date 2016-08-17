@@ -137,7 +137,10 @@ public class ResearchNet: NSObject {
             
                 if let requestBody = response.data {
                     do {
-                        let jsonArray = try NSJSONSerialization.JSONObjectWithData(requestBody, options: [])
+
+                        let resp = response.request!.HTTPBody
+
+                        let jsonArray = try NSJSONSerialization.JSONObjectWithData(resp!, options: [])
                         print("Array: \(jsonArray)")
                     }
                     catch {
