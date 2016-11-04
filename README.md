@@ -29,5 +29,4 @@ Note that this requires CocoaPods version 36, and your iOS deployment target to 
 
 ### Who do I talk to? ###
 
-* Please contact @adam704a with questions
 * Open issues in this repo for bugs or feature requests.

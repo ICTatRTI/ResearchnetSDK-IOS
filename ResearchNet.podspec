@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ResearchNet"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "This IOS framework provides support for using the Researchnet backend."
 
 
@@ -10,10 +10,10 @@ ResearchNet is the easiest way to add secure, HIPAA compliant cloud data storage
                         backed by the Research Computing Division at the RTI International.
                        DESC
 
-  s.homepage         = "https://bitbucket.org/rcdrti/researchnetsdk-ios"
+  s.homepage         = "https://github.com/ICTatRTI/ResearchnetSDK-IOS"
   s.license          = 'MIT'
   s.author           = { "Adam Preston" => "apreston@rti.org" }
-  s.source           = { :git => "https://adam704a@bitbucket.org/rcdrti/researchnetsdk-ios.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/ICTatRTI/ResearchnetSDK-IOS.git", :tag => s.version.to_s }
 
 
   s.ios.deployment_target = '9.0'
@@ -24,8 +24,8 @@ ResearchNet is the easiest way to add secure, HIPAA compliant cloud data storage
 
   s.source_files = 'ResearchNet/Classes/**/*'
 
-  s.dependency 'Alamofire', '~> 3.1.5'
+  s.dependency 'Alamofire', '~> 3.5'
 
-  s.dependency 'SwiftyJSON', '~> 2.3.1'
+  s.dependency 'SwiftyJSON', '~> 2.4'
   
 end

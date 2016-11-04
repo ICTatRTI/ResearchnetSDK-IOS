@@ -113,7 +113,7 @@ public class ResearchNet: NSObject {
         let authKey = defaults.objectForKey("authKey")
         
         
-        var parameters: [String:AnyObject] = [
+        let parameters: [String:AnyObject] = [
             "device_id" : (device_id)!,
             "lat" : lat!,
             "long" : long!,
