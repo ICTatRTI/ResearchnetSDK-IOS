@@ -45,7 +45,6 @@ public class ResearchNet: NSObject {
                 
             case .Success(let data):
                 
-                let json = JSON(data)
                 completionHandler(responseObject: response.response, error: nil)
                 
             case .Failure(let responseError):
@@ -94,10 +93,6 @@ public class ResearchNet: NSObject {
 
     public func forgotPassword(completionHandler: (responseObject: String?, error: NSError?) -> (), email: String?) {
         
-        let parameters = [
-            "email": email!,
-
-        ]
         
         // Call to forgot password API (doesn't exist yet)
         print("forgot password for", email )
