@@ -18,9 +18,9 @@ ResearchNet is the easiest way to add secure, HIPAA compliant cloud data storage
 
   s.ios.deployment_target = '9.0'
 
-  s.resource_bundles = {
-    'ResearchNet' => ['ResearchNet/Assets/*.png']
-  }
+  #s.resource_bundles = {
+  #  'ResearchNet' => ['ResearchNet/Assets/*.png']
+  #}
 
   s.source_files = 'ResearchNet/Classes/**/*'
 
