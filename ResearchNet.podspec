@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ResearchNet"
-  s.version          = "0.1.1"
+  s.version          = "0.1.2"
   s.summary          = "This IOS framework provides support for using the Researchnet backend."
 
 
@@ -24,8 +24,8 @@ ResearchNet is the easiest way to add secure, HIPAA compliant cloud data storage
 
   s.source_files = 'ResearchNet/Classes/**/*'
 
-  s.dependency 'Alamofire', '~> 3.5'
+  s.dependency 'Alamofire', '~> 4.2'
 
-  s.dependency 'SwiftyJSON', '~> 2.4'
+  s.dependency 'SwiftyJSON', '~> 3.1.3'
   
 end

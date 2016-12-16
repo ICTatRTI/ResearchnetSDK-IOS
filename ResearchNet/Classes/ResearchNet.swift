@@ -2,7 +2,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-public class ResearchNet: NSObject {
+open class ResearchNet: NSObject {
 
     var host: String
     var appKey: String
@@ -13,15 +13,14 @@ public class ResearchNet: NSObject {
         self.appKey = appKey
     }
     
-    
-    public func printConfiguration() {
+    open func printConfiguration() {
         NSLog("The host is ", host)
     }
     
     
-    public func enrollUser(completionHandler: (responseObject:NSHTTPURLResponse?, error: NSError?) -> (), username: String?, password: String?, first_name: String?, last_name: String?, gender: String?, dob: String?) {
+    open func enrollUser(_ completionHandler: @escaping (_ responseObject:HTTPURLResponse?, _ error: Error?) -> (), username: String?, password: String?, first_name: String?, last_name: String?, gender: String?, dob: String?) {
         
-        let parameters = [
+        let parameters: Parameters = [
             "username": username!,
             "password": password!,
             "first_name": first_name!,
@@ -34,23 +33,23 @@ public class ResearchNet: NSObject {
         // Enrolling users require the app key (because the user doesn't have a key of their own yet.
         // Only use the appKey here!
         
-        let headers = [
+        let headers: HTTPHeaders = [
             "Authorization": "Token \(appKey)"
         ]
         
-        Alamofire.request(.POST, "https://"+host+"/participant/", headers: headers, parameters: parameters)
+        Alamofire.request("https://"+host+"/participant/",  parameters: parameters, headers: headers)
             .validate()
 
             .responseJSON { response in switch response.result {
                 
-            case .Success(let data):
+            case .success(let data):
                 
-                completionHandler(responseObject: response.response, error: nil)
+                completionHandler(response.response, nil)
                 
-            case .Failure(let responseError):
+            case .failure(let responseError):
  
                 //print("Request failed with error: \(responseError)")
-                completionHandler(responseObject: response.response , error: responseError)
+                completionHandler(response.response ,  responseError)
                 
                 }
         }
@@ -59,14 +58,14 @@ public class ResearchNet: NSObject {
     }
     
     
-    public func authenticateUser(completionHandler: (responseObject: String?, error: NSError?) -> (), username: String?, password: String?) {
+    open func authenticateUser(_ completionHandler: @escaping (_ responseObject: String?, _ error: Error?) -> (), username: String?, password: String?) {
 
-        let parameters = [
+        let parameters: Parameters = [
             "username": username!,
             "password": password!
         ]
         
-        Alamofire.request(.POST, "https://"+host+"/api-token-auth/", parameters: parameters)
+        Alamofire.request("https://"+host+"/api-token-auth/", method: .post, parameters: parameters)
             
             /*
              Alamofire treats any completed request to be successful, regardless of the content of the response. Calling validate before a response handler causes an error to be generated if the response had an unacceptable status code or MIME type. a swift 3 read more here: https://github.com/Alamofire/Alamofire#validation
@@ -75,15 +74,15 @@ public class ResearchNet: NSObject {
             //here you pass a new closure to the responseString method
             .responseJSON { response in switch response.result {
                 
-            case .Success(let data):
+            case .success(let data):
                 
                 let json = JSON(data)
                 let token = json["token"].stringValue
-                completionHandler(responseObject: token as String!, error: nil)
+                completionHandler(token as String!, nil)
                 
-            case .Failure(let responseError):
+            case .failure(let responseError):
 
-                completionHandler(responseObject: "error" as String!, error: responseError)
+                completionHandler("error" as String!, responseError)
                 
             }
                 
@@ -91,7 +90,7 @@ public class ResearchNet: NSObject {
     }
 
 
-    public func forgotPassword(completionHandler: (responseObject: String?, error: NSError?) -> (), email: String?) {
+    open func forgotPassword(_ completionHandler: (_ responseObject: String?, _ error: NSError?) -> (), email: String?) {
         
         
         // Call to forgot password API (doesn't exist yet)
@@ -100,42 +99,44 @@ public class ResearchNet: NSObject {
     }
 
     
-    public func submitSurveyResponse(completionHandler: (responseObject: NSHTTPURLResponse?, error: NSError?) -> (), device_id: String?, lat: String?, long: String?, response: [String:String]) {
+    open func submitSurveyResponse(_ completionHandler: @escaping (_ responseObject: HTTPURLResponse?, _ error: Error?) -> (), device_id: String?, lat: String?, long: String?, response: [String:String]) {
         
         // call to submit api http://researchnet-documentation.s3-website-us-east-1.amazonaws.com/api/#survey-submission
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let authKey = defaults.objectForKey("authKey")
+        let defaults = UserDefaults.standard
+        let authKey = defaults.object(forKey: "authKey")
         
         
-        let parameters: [String:AnyObject] = [
-            "device_id" : (device_id)!,
-            "lat" : lat!,
-            "long" : long!,
-            "response" : response
+        let parameters: Parameters = [
+            "device_id" : (device_id)! as AnyObject,
+            "lat" : lat! as AnyObject,
+            "long" : long! as AnyObject,
+            "response" : response as AnyObject
         ]
         
         
-        let headers = [
+        let headers: HTTPHeaders = [
             "Authorization": "Token \(authKey!)"
         ]
         
         
-        Alamofire.request(.POST, "https://"+host+"/submission/", headers: headers, parameters: parameters, encoding: .JSON)
+        Alamofire.request("https://"+host+"/submission/",  method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .validate()
-            .responseJSON { response in switch response.result {
+            .responseJSON { response in
                 
-            case .Success(let data):
-                completionHandler(responseObject: response.response, error: nil)
+             switch response.result {
                 
-            case .Failure(let responseError):
+            case .success(let data):
+                completionHandler(response.response, nil)
+                
+            case .failure(let responseError):
             
                 if let requestBody = response.data {
                     do {
 
-                        let resp = response.request!.HTTPBody
+                        let resp = response.request!.httpBody
 
-                        let jsonArray = try NSJSONSerialization.JSONObjectWithData(resp!, options: [])
+                        let jsonArray = try JSONSerialization.jsonObject(with: resp!, options: [])
                         print("Array: \(jsonArray)")
                     }
                     catch {
@@ -143,7 +144,7 @@ public class ResearchNet: NSObject {
                     }
                 }
                 
-                completionHandler(responseObject: response.response,  error: responseError)
+                completionHandler(response.response, responseError)
                 
                 }  
             }
