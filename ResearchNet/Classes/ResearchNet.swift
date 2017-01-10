@@ -37,10 +37,10 @@ open class ResearchNet: NSObject {
             "Authorization": "Token \(appKey)"
         ]
         
-        Alamofire.request("https://"+host+"/participant/",  parameters: parameters, headers: headers)
+         Alamofire.request("https://"+host+"/participant/",  method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .validate()
-
             .responseJSON { response in switch response.result {
+
                 
             case .success(let data):
                 
@@ -122,9 +122,7 @@ open class ResearchNet: NSObject {
         
         Alamofire.request("https://"+host+"/submission/",  method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .validate()
-            .responseJSON { response in
-                
-             switch response.result {
+            .responseJSON { response in switch response.result {
                 
             case .success(let data):
                 completionHandler(response.response, nil)
