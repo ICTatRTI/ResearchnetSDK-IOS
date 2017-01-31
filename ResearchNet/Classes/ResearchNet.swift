@@ -21,13 +21,13 @@ open class ResearchNet: NSObject {
     open func enrollUser(_ completionHandler: @escaping (_ responseObject:HTTPURLResponse?, _ error: Error?) -> (), username: String?, password: String?, first_name: String?, last_name: String?, gender: String?, dob: String?) {
         
         let parameters: Parameters = [
-            "username": username!,
-            "password": password!,
-            "first_name": first_name!,
-            "last_name": last_name!,
-            "gender": gender!,
-            "email": username!,
-            "dob": dob!
+            "username": username,
+            "password": password,
+            "first_name": first_name,
+            "last_name": last_name,
+            "gender": gender,
+            "email": username,
+            "dob": dob
         ]
         
         // Enrolling users require the app key (because the user doesn't have a key of their own yet.
@@ -36,6 +36,7 @@ open class ResearchNet: NSObject {
         let headers: HTTPHeaders = [
             "Authorization": "Token \(appKey)"
         ]
+        
         
          Alamofire.request("https://"+host+"/participant/",  method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .validate()
@@ -48,7 +49,24 @@ open class ResearchNet: NSObject {
                 
             case .failure(let responseError):
  
-                //print("Request failed with error: \(responseError)")
+                print(NSString(data: (response.request?.httpBody)!, encoding: String.Encoding.utf8.rawValue))
+                
+                if let requestBody = response.data {
+                    do {
+                        
+                        let resp = response.request!.httpBody
+                        
+                        let jsonArray = try JSONSerialization.jsonObject(with: requestBody, options: [])
+                        print("Array: \(jsonArray)")
+                        print("Error Description: \(responseError.localizedDescription)")
+                        
+
+                    }
+                    catch {
+                        print("Error: \(responseError)")
+                    }
+                }
+                
                 completionHandler(response.response ,  responseError)
                 
                 }
